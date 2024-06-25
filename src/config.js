@@ -11,5 +11,8 @@ export const DB_PASSWORD = "luis"
 export const DB_DATABASE = "gestion"
 
 
+export const TOKENSECRET= "TOKEN"
+
+
 
 
