@@ -1,6 +1,8 @@
 import pool from "../db.js";
 import bcrypt from "bcrypt";
 import { crearToken } from "../libs/jwt.js";
+import jwt from "jsonwebtoken";
+import { TOKENSECRET } from "../config.js";
 
 export const registerUsers = async (req, res) => {
   const { nombre, apellidos, email, password, rol } = req.body;
@@ -55,15 +57,54 @@ export const login = async (req, res) => {
     if (match) {
       const token = await crearToken({
         id: usuario.id_usuario,
-        rol: usuario.roles_id_rol,
+        rol: usuario.roles_id_rol
       });
       res.cookie("token", token);
 
       res.status(200).json({ message: "Inicio de sesión exitoso", usuario });
+
     } else {
-      res.status(401).json({ message: "Credenciales  inválidas" });
+      res.status(404).json({ message: "Credenciales  inválidas" });
     }
   } catch (error) {
     res.status(400).json(error);
   }
 };
+
+
+export const consultaToken = async (req, res) => {
+
+  const { token } = req.cookies;
+
+  
+  try {
+
+    if(!token){
+      return res.status(401).json({message: 'No Autorizado'});
+
+    }
+
+    jwt.verify(token, TOKENSECRET, async (err, user)=>{
+      if(err) {
+        return res.status(401).json({message: 'Token Invalido'});
+      }
+
+      const [rows]=  await pool.query('SELECT * FROM usuarios WHERE id_usuario= ?', [user.id]);
+
+
+
+      return res.status(200).json(rows[0]);
+
+
+    })
+
+    
+
+
+
+  } catch (error) {
+    res.status(400).json(error);
+
+  }
+
+}

@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 const app = express();
 import cors from "cors";
+import cookieParser  from "cookie-parser";
 
 //rutas
 import userRoutes from "./routes/usuarios.routes.js";
@@ -15,6 +16,7 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(cookieParser())
 app.use(morgan("dev"));
 
 app.set("port", 3000);

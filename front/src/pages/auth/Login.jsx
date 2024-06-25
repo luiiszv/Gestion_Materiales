@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 
@@ -8,12 +9,26 @@ import { useAuth } from "../../context/AuthContext";
 const Login = () => {
   const { loginAuth } = useAuth();
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate()
 
-  const onSubmit = handleSubmit(async(values) => {
+  const onSubmit = handleSubmit(async (values) => {
 
-    await loginAuth(values);
+    const response = await loginAuth(values)
 
-    
+    console.log(response);
+
+
+
+
+    if (response.status == 200) {
+
+      navigate('/')
+
+    }
+    if (response.status == 404) {
+      alert(response.data.message)
+
+    }
 
   })
 
@@ -47,7 +62,7 @@ const Login = () => {
               {...register('password', { required: true })}
             />
           </div>
-          <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-3 rounded-lg text-lg">
+          <button type="submit" className="bg-green-500 text-white font-bold py-3 px-3 rounded-lg text-lg">
             Iniciar Sesión
           </button>
         </form>

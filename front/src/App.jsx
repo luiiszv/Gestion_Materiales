@@ -5,7 +5,7 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext'; 
 
 // Layout
-import { UserLayouts } from './layouts/UserLayouts'; 
+import { UserLayout } from './layouts/UserLayouts'; 
 
 // Pages
 import Home from './pages/Home';
@@ -19,7 +19,7 @@ const App = () => {
       <AuthProvider>
         <Routes>
           <Route path='/login' element={<Login />} />
-          <Route path='/' element={<UserLayouts />}>
+          <Route path='/' element={<UserLayout />}>
             <Route index element={<Home />} />
             <Route path='gestion-usuarios' element={<GestionUsuarios />} />
             <Route path='asignar-materiales' element={<AsignarMateriales />} />
