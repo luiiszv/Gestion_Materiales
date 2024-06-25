@@ -1,10 +1,11 @@
 import React, { useContext, useState, createContext } from 'react'
 
+import { login } from "../Api/userApi.js";
 
 const AuthContext = createContext()
 
 
-export const usarAuth = () => {
+export const useAuth = () => {
 
     const contexto = useContext(AuthContext);
 
@@ -12,22 +13,31 @@ export const usarAuth = () => {
         throw new Error("Algo esta mal en AuthContex")
     }
 
+    return contexto;
+
 
 }
 
 
 
-const AuthProvedor = ({ children }) => {
-    
+export const AuthProvider = ({ children }) => {
+
+    const loginAuth = async (data) => {
+        const res = await login(data)
+        console.log(res)
+
+    }
+
+
+
+
 
 
 
 
     return (
-        <AuthContext.Provider value={{}}>
+        <AuthContext.Provider value={{ loginAuth }}>
             {children}
         </AuthContext.Provider>
-    )
+    );
 }
-
-export default AuthContext

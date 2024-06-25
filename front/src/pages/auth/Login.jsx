@@ -2,12 +2,18 @@ import React, { useState } from 'react';
 
 import { useForm } from "react-hook-form";
 
+//useContext
+import { useAuth } from "../../context/AuthContext";
+
 const Login = () => {
+  const { loginAuth } = useAuth();
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = handleSubmit((values) => {
+  const onSubmit = handleSubmit(async(values) => {
 
-    console.log(values)
+    await loginAuth(values);
+
+    
 
   })
 
@@ -27,7 +33,7 @@ const Login = () => {
               id="email"
               name="email"
               className="w-full border rounded px-4 py-2 text-lg"
-              {...register('email', { required: true }) }
+              {...register('email', { required: true })}
 
             />
           </div>

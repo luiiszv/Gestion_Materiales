@@ -1,40 +1,33 @@
-import React from 'react'
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import React from 'react';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
+// Context
+import { AuthProvider } from './context/AuthContext'; 
 
+// Layout
+import { UserLayouts } from './layouts/UserLayouts'; 
 
-//layoput
-import { UserLayouts } from './layouts/UserLayouts'
-
-
-//pages
-import Home from "./pages/Home";
+// Pages
+import Home from './pages/Home';
 import GestionUsuarios from './pages/GestionUsuarios';
 import AsignarMateriales from './pages/AsignarMateriales';
 import Login from './pages/auth/Login';
 
-
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-
-        <Route path='/login' element={<Login />} />
-
-        <Route path='/' element={<UserLayouts />}>
-          <Route index element={<Home />} />
-          <Route path='gestion-usuarios' element={<GestionUsuarios />} />
-          <Route path='asignar-materiales' element={<AsignarMateriales />} />
-
-
-        </Route>
-
-
-      </Routes>
-
-
+      <AuthProvider>
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<UserLayouts />}>
+            <Route index element={<Home />} />
+            <Route path='gestion-usuarios' element={<GestionUsuarios />} />
+            <Route path='asignar-materiales' element={<AsignarMateriales />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default App
+export default App;

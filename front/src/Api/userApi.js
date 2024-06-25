@@ -1,3 +1,3 @@
 import axios from "./axios";
 
-export const login = (data) => axios.post("/login", data);
+export const login = (user) => axios.post('/users/login', user);
