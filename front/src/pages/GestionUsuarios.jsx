@@ -76,7 +76,14 @@ const GestionUsuarios = () => {
                   <td className='p-2 border  text-center'>{user.apellidos_usuario}</td>
                   <td className='p-2 border  text-center'>{user.email_usuario}</td>
                   <td className='p-2 border   text-center'>{user.roles_id_rol}</td>
-                  <td className='p-2 border   text-center'>{'Accion'}</td>
+                  <td className='p-2 border   text-center'>{
+
+                    <Link
+                    to={`/gestion-admin/editar/usuario/${user.id_usuario}`}
+                    className='bg-blue-400 hover:bg-blue-600 px-1 text-white rounded-lg '>Editar</Link>
+
+
+                  }</td>
                 </tr>
               ))}
             </tbody>
@@ -91,8 +98,8 @@ const GestionUsuarios = () => {
 
 
 
-      <hr />
-      <hr />
+      <hr className='my-5 bg-green-500 p-1' />
+
 
 
 
@@ -125,7 +132,14 @@ const GestionUsuarios = () => {
                   <td className='p-2 border  text-center'>{mat.id_material}</td>
                   <td className='p-2 border  text-center'>{mat.nombre}</td>
                   <td className='p-2 border  text-center'>{mat.descripcion_material}</td>
-                  <td className='p-2 border   text-center'>{'Accion'}</td>
+                  <td className='p-2 border   text-center'>{
+
+                    <Link
+                   
+                    className='bg-blue-400 hover:bg-blue-600 px-1 text-white rounded-lg '>Editar</Link>
+
+
+                  }</td>
                 </tr>
               ))}
             </tbody>

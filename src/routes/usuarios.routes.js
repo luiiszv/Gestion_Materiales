@@ -4,7 +4,9 @@ import {
   registerUsers,
   login,
   consultaToken,
-  getAllEstudiantes
+  getAllEstudiantes,
+  getOneUser,
+  editUsuario
 } from "../controllers/user.controllers.js";
 
 const router = Router();
@@ -17,5 +19,10 @@ router.get("/estudiantes", getAllEstudiantes);
 
 //validat toen
 router.get("/verificar", consultaToken);
+
+router.get("/:id", getOneUser);
+router.put("/:id", editUsuario);
+
+
 
 export default router;

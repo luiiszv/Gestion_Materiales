@@ -1,11 +1,45 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-
 import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
-    const { logout } = useAuth()
+    const { logout, user } = useAuth();
+    const { roles_id_rol } = user;
+
+    let gestionLink;
+
+    if (roles_id_rol === 2) {
+        gestionLink = (
+            <>
+                
+                <Link to="/" className="text-black font-semibold hover:text-white">
+                    Home 
+                </Link>
+                <Link to="/asignar-materiales" className="text-black font-semibold hover:text-white">
+                    Gestión Materiales
+                </Link>
+            </>
+        );
+    } else if (roles_id_rol === 1) {
+        gestionLink = (
+            <>
+                <Link to="/" className="text-black font-semibold hover:text-white">
+                    Home
+                </Link>
+                
+                <Link to="/gestion-admin" className="text-black font-semibold hover:text-white">
+                    Gestión Admin
+                </Link>
+            </>
+        );
+    } else {
+        gestionLink = (
+            <Link to="/" className="text-black font-semibold hover:text-white">
+                Home
+            </Link>
+        );
+    }
+
     return (
         <header className="bg-gray-400 px-4 py-6 flex justify-between items-center rounded-lg">
             <div className="flex items-center">
@@ -14,9 +48,7 @@ const Header = () => {
                 </Link>
             </div>
             <nav className="space-x-4">
-                <Link to="/" className="text-black font-semibold hover:text-white">Home</Link>
-                <Link to="/gestion-admin" className="text-black font-semibold hover:text-white">Gestión Admin</Link>
-                <Link to="/asignar-materiales" className="text-black font-semibold hover:text-white">Gestión Materiales</Link>
+                {gestionLink}
             </nav>
             <div>
                 <Link
@@ -25,7 +57,6 @@ const Header = () => {
                     onClick={() => {
                         logout();
                     }}
-
                 >
                     Cerrar Sesión
                 </Link>

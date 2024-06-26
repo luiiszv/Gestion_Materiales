@@ -14,7 +14,8 @@ import AsignarMateriales from './pages/AsignarMateriales';
 import Login from './pages/auth/Login';
 import RegistrarUsuarios from './pages/RegistrarUsuarios';
 import RegistrarMateriales from './pages/RegistrarMateriales';
-
+import EditarUsuario from './pages/EditarUsuario';
+import Error from './pages/auth/Error';
 const App = () => {
   return (
     <BrowserRouter>
@@ -28,11 +29,15 @@ const App = () => {
 
             <Route path='gestion-admin' element={<GestionUsuarios />} />
             <Route path='registrar-usuarios' element={<RegistrarUsuarios />} />
+            <Route path='gestion-admin/editar/usuario/:id' element={<EditarUsuario />} />
+
 
             <Route path='asignar-materiales' element={<AsignarMateriales />} />
             <Route path='registrar-materiales' element={<RegistrarMateriales />} />
 
           </Route>
+
+          <Route path="*" element={<Error/>} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

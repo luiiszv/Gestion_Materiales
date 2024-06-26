@@ -17,9 +17,9 @@ const Home = () => {
         }
         misMateriales();
 
-    }, [])
+    }, []);
 
-    console.log(misMateriales)
+ 
     return (
 
         <div className="">
