@@ -71,12 +71,12 @@ const GestionUsuarios = () => {
             <tbody>
               {allUsuarios.map((user) => (
                 <tr key={user.id_usuario}>
-                  <td className='p-2 border font-bold text-center'>{user.id_usuario}</td>
-                  <td className='p-2 border font-bold text-center'>{user.nombres_usuario}</td>
-                  <td className='p-2 border font-bold text-center'>{user.apellidos_usuario}</td>
-                  <td className='p-2 border font-bold text-center'>{user.email_usuario}</td>
-                  <td className='p-2 border  font-bold text-center'>{user.roles_id_rol}</td>
-                  <td className='p-2 border  font-bold text-center'>{'Accion'}</td>
+                  <td className='p-2 border  text-center'>{user.id_usuario}</td>
+                  <td className='p-2 border  text-center'>{user.nombres_usuario}</td>
+                  <td className='p-2 border  text-center'>{user.apellidos_usuario}</td>
+                  <td className='p-2 border  text-center'>{user.email_usuario}</td>
+                  <td className='p-2 border   text-center'>{user.roles_id_rol}</td>
+                  <td className='p-2 border   text-center'>{'Accion'}</td>
                 </tr>
               ))}
             </tbody>
@@ -122,11 +122,10 @@ const GestionUsuarios = () => {
             <tbody>
               {materiales.map((mat) => (
                 <tr key={mat.id_material}>
-                  <td className='p-2 border font-bold text-center'>{mat.id_material}</td>
-                  <td className='p-2 border font-bold text-center'>{mat.nombre}</td>
-                  <td className='p-2 border font-bold text-center'>{mat.descripcion_material}</td>
-
-                  <td className='p-2 border  font-bold text-center'>{'Accion'}</td>
+                  <td className='p-2 border  text-center'>{mat.id_material}</td>
+                  <td className='p-2 border  text-center'>{mat.nombre}</td>
+                  <td className='p-2 border  text-center'>{mat.descripcion_material}</td>
+                  <td className='p-2 border   text-center'>{'Accion'}</td>
                 </tr>
               ))}
             </tbody>

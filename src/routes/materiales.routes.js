@@ -2,7 +2,8 @@ import { Router } from "express";
 import {
   getMateriales,
   registerMateriales,
-  
+  misMateriales
+
 } from "../controllers/materiales.controlles.js";
 
 
@@ -17,6 +18,10 @@ router.post("/register", registerMateriales);
 router.post("/asignar", validarToken, asignarMaterial);
 
 router.get("/asignaciones", getAsiganciones);
+
+
+router.get("/misMateriales", validarToken, misMateriales);
+
 
 
 

@@ -7,13 +7,15 @@ import { Link } from 'react-router-dom';
 
 const AsignarMateriales = () => {
 
-  const { register, setValue, handleSubmit, formState: { errors }} = useForm();
+  const { register, setValue, handleSubmit, formState: { errors }, reset } = useForm();
   const [allUsuarios, setAllUsuarios] = useState([])
 
   const [estudiantes, setEstudiantes] = useState([]);
 
 
-  const { user, materiales, getUsuarios, getAllEstiduantes } = useAuth();
+  const { user, materiales, getUsuarios, getAllEstiduantes, asignaciones, asignarMaterial } = useAuth();
+
+
 
 
 
@@ -44,6 +46,12 @@ const AsignarMateriales = () => {
   const onSubmit = handleSubmit(async (values) => {
     console.log(values)
 
+    const res= await asignarMaterial(values);
+    if(res.status==200){
+      reset();
+      alert("Material Asignado")
+    }
+
   })
 
 
@@ -51,13 +59,6 @@ const AsignarMateriales = () => {
 
   return (
     <div className="py-5 bg-white rounded-xl overflow-x-auto border">
-
-
-
-
-
-
-
 
 
       <div className="flex justify-center items-center h-screen">
@@ -177,6 +178,63 @@ const AsignarMateriales = () => {
       </div>
       <hr />
 
+
+
+      <div className="m-5">
+        <h1 className='text-2xl my-5'>Info Entregas</h1>
+        <table className="w-full table-auto ">
+          <thead>
+            <tr>
+              <th className="p-2 border text-lg font-bold text-center">ID</th>
+              <th className="p-2 border text-lg font-bold text-center">Fecha</th>
+
+              <th className="p-2 border text-lg font-bold text-center">
+                Material
+              </th>
+              <th className="p-2 border text-lg font-bold text-center">
+                Repartidor
+              </th>
+              <th className="p-2 border text-lg font-bold text-center">
+                Estudainte
+              </th>
+              <th className="p-2 border text-lg font-bold text-center">
+                Estado
+              </th>
+
+
+            </tr>
+          </thead>
+
+
+
+          <tbody>
+            {asignaciones.map((asignaciones) => (
+              <tr key={asignaciones.id_asignaciones}>
+                <td className='p-2 border text-center'>{asignaciones.id_asignaciones}</td>
+                <td className='p-2 border  text-center'>{asignaciones.fecha}</td>
+
+                <td className='p-2 border  text-center'>{asignaciones.material}</td>
+                <td className='p-2 border  text-center'>{asignaciones.repartidor}</td>
+                <td className='p-2 border  text-center'>{asignaciones.estudiante}</td>
+                <td className='p-2 border  text-center'>{asignaciones.estado_material}</td>
+
+
+
+              </tr>
+            ))}
+          </tbody>
+
+
+
+
+
+        </table>
+      </div>
+
+      <hr />
+
+
+
       <div className="m-5">
         <h1 className='text-2xl my-5'>Info Materiales</h1>
         <table className="w-full table-auto ">
@@ -199,9 +257,9 @@ const AsignarMateriales = () => {
           <tbody>
             {materiales.map((mat) => (
               <tr key={mat.id_material}>
-                <td className='p-2 border font-bold text-center'>{mat.id_material}</td>
-                <td className='p-2 border font-bold text-center'>{mat.nombre}</td>
-                <td className='p-2 border font-bold text-center'>{mat.descripcion_material}</td>
+                <td className='p-2 border  text-center'>{mat.id_material}</td>
+                <td className='p-2 border  text-center'>{mat.nombre}</td>
+                <td className='p-2 border  text-center'>{mat.descripcion_material}</td>
 
 
               </tr>

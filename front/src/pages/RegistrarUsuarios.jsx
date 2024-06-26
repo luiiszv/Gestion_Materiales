@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Link } from 'react-router-dom';
 
@@ -10,21 +11,28 @@ const RegistrarUsuarios = () => {
 
     const { register, handleSubmit } = useForm();
 
+    const navigate= useNavigate();
+
 
     const onSubmit = handleSubmit(async (values) => {
 
 
-        await registrarUsuarios(values);
+        const res= await registrarUsuarios(values);
+
+         
+        if (res.status == 200) {
+            alert('Usuario Registrado');
+        
+
+            setTimeout(() => {
+                navigate('/gestion-admin');
+            }, 1000);
+        }
 
 
 
 
 
-
-
-
-
-        console.log(values)
 
     })
     return (

@@ -19,10 +19,20 @@ const RegistrarMateriales = () => {
     const onSubmit = handleSubmit(async (values) => {
 
 
-       
-            const res = await registrarMaterialesUsuarios(values);
-            navigate('/gestion-admin')
+
+        const res = await registrarMaterialesUsuarios(values);
+
         
+        if (res.status == 200) {
+            alert('Material Registrado');
+        
+
+            setTimeout(() => {
+                navigate('/gestion-admin');
+            }, 1000);
+        }
+        
+
 
 
 

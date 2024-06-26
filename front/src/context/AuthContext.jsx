@@ -3,10 +3,10 @@ import Cookies from "js-cookie";
 import { login, verify, getUsers, registerUsers, getEstudiantes } from "../Api/userApi.js";
 import { getRoles } from "../Api/rolesApi.js";
 
+import { getAllAsign, asignarMateriales } from "../Api/asignacionesApi.js";
 import { useLocation } from "react-router-dom";
 
-import { getMateriales, registerMateriales } from "../Api/materialesApi.js";
-import { getAllAsign } from "../Api/asignacionesApi.js";
+import { getMateriales, registerMateriales, getMisMateriales } from "../Api/materialesApi.js";
 
 
 const AuthContext = createContext();
@@ -20,12 +20,17 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+
+    
     let location = useLocation()
     const [roles, setRoles] = useState([]);
     const [materiales, setMateriales] = useState([]);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
+    const [asignaciones, setAsignaciones] = useState([])
 
 
 
@@ -63,9 +68,9 @@ export const AuthProvider = ({ children }) => {
                 return setUser(null);
             }
 
-            
-            
-            
+
+
+
             try {
                 const res = await verify();
 
@@ -75,7 +80,7 @@ export const AuthProvider = ({ children }) => {
                     setIsAuthenticated(false);
                     setUser(null);
                 }
-              
+
 
 
                 setIsAuthenticated(true);
@@ -109,7 +114,7 @@ export const AuthProvider = ({ children }) => {
 
     }
 
-    
+
 
     const getAllEstiduantes = async () => {
         const res = await getEstudiantes();
@@ -117,26 +122,47 @@ export const AuthProvider = ({ children }) => {
     }
 
 
-    const todasAsignaciones= async()=>{
+    const todasAsignaciones = async () => {
 
-        const res = await getAllAsign()
-  
+        const { data } = await getAllAsign()
+        setAsignaciones(data);
+
+
 
     }
 
-    
+    const asignarMaterial = async (data) => {
+
+        const res = await asignarMateriales(data);
+        todasAsignaciones();
+        return res;
+
+    }
+
+
+    const obtenerMisMateriales = async () => {
+
+        const res = await getMisMateriales();
+
+        return res.data
+
+
+    }
+
+
 
 
     useEffect(() => {
         todasAsignaciones();
+       
 
 
         getAllRoles();
-        
-        
+
+
         getAllMateriales();
-        
-        
+
+
 
     }, [location.pathname])
 
@@ -155,7 +181,7 @@ export const AuthProvider = ({ children }) => {
 
         try {
             const res = await registerUsers(data);
-            console.log(res);
+            return res;
 
         } catch (error) {
             console.log(error.response);
@@ -167,9 +193,9 @@ export const AuthProvider = ({ children }) => {
     const registrarMaterialesUsuarios = async (data) => {
 
         try {
-            const response = await registerMateriales(data)
+            const res = await registerMateriales(data)
             getAllMateriales();
-            return response;
+            return res;
 
 
 
@@ -182,7 +208,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ getAllEstiduantes, loginAuth, getUsuarios, user, loading, logout, isAuthenticated, roles, registrarUsuarios, materiales, registrarMaterialesUsuarios }}>
+        <AuthContext.Provider value={{ getAllEstiduantes, asignarMaterial, obtenerMisMateriales, asignaciones, loginAuth, getUsuarios, user, loading, logout, isAuthenticated, roles, registrarUsuarios, materiales, registrarMaterialesUsuarios }}>
             {children}
         </AuthContext.Provider>
     );
