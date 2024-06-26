@@ -16,7 +16,7 @@ app.use(
   })
 );
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.set("port", 3000);

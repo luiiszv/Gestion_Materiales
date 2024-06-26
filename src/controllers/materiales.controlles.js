@@ -11,14 +11,18 @@ export const getMateriales = async (req, res) => {
 };
 
 export const registerMateriales = async (req, res) => {
-  const { nombreMaterial, descripcionMaterial } = req.body;
+  const { nombreMaterial, descripcion_material } = req.body;
 
   try {
     const [rows] = await pool.query(
-      `INSERT INTO materiale (nombre, descripcion_material)`,
-      [nombreMaterial, descripcionMaterial]
+      `INSERT INTO materiales (nombre, descripcion_material) VALUES (?,?)`,
+      [nombreMaterial, descripcion_material]
     );
-    res.status(200).json(rows);
+
+    if (rows > 0) {
+
+      res.status(200).json(rows);
+    }
   } catch (error) {
     res.status(200).json(error);
   }

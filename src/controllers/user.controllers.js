@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { TOKENSECRET } from "../config.js";
 
 export const registerUsers = async (req, res) => {
-  const { nombre, apellidos, email, password, rol } = req.body;
+  const { nombres, apellidos, email, password, rol } = req.body;
 
   try {
     //Bcrypity
@@ -13,7 +13,7 @@ export const registerUsers = async (req, res) => {
 
     const [rows] = await pool.query(
       `INSERT INTO usuarios (nombres_usuario, apellidos_usuario, email_usuario, password_usuario, roles_id_rol) VALUES (?,?,?,?,?)`,
-      [nombre, apellidos, email, passwordHash, rol]
+      [nombres, apellidos, email, passwordHash, rol]
     );
 
     if (rows.affectedRows > 0) {
@@ -98,13 +98,30 @@ export const consultaToken = async (req, res) => {
 
     })
 
-    
-
 
 
   } catch (error) {
     res.status(400).json({message: 'Error No Autorizado'});
 
+  }
+
+}
+
+
+
+export const getAllEstudiantes= async(req, res)=>{
+
+
+  try {
+    const [rows]= await pool.query('SELECT * FROM usuarios WHERE roles_id_rol= ?',[3]);
+    
+
+    return res.status(200).json(rows);
+    
+  } catch (error) {
+    res.status(400).json({message: 'Error No Autorizado', error});
+
+    
   }
 
 }

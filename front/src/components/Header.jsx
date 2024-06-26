@@ -15,7 +15,7 @@ const Header = () => {
             </div>
             <nav className="space-x-4">
                 <Link to="/" className="text-black font-semibold hover:text-white">Home</Link>
-                <Link to="/gestion-usuarios" className="text-black font-semibold hover:text-white">Gestión Usuarios</Link>
+                <Link to="/gestion-admin" className="text-black font-semibold hover:text-white">Gestión Admin</Link>
                 <Link to="/asignar-materiales" className="text-black font-semibold hover:text-white">Gestión Materiales</Link>
             </nav>
             <div>

@@ -2,13 +2,20 @@ import React from 'react'
 
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
+import { Link } from 'react-router-dom';
+
+
 const RegistrarUsuarios = () => {
-    const { roles } = useAuth()
+    const { roles, registrarUsuarios } = useAuth()
 
     const { register, handleSubmit } = useForm();
 
 
     const onSubmit = handleSubmit(async (values) => {
+
+
+        await registrarUsuarios(values);
+
 
 
 
@@ -35,7 +42,7 @@ const RegistrarUsuarios = () => {
                             id="Nombres"
                             name="Nombres"
                             className="w-full border rounded px-4 py-2 text-lg"
-                            {...register('Nombres', { required: true })}
+                            {...register('nombres', { required: true })}
 
                         />
                     </div>
@@ -47,22 +54,24 @@ const RegistrarUsuarios = () => {
                             id="Apellidos"
                             name="Apellidos"
                             className="w-full border rounded px-4 py-2 text-lg"
-                            {...register('Apellidos', { required: true })}
+                            {...register('apellidos', { required: true })}
 
                         />
                     </div>
 
                     <div className="mb-6">
                         <label htmlFor="email" className="block mb-2 text-lg">Rol:</label>
+
                         <select
                             id="Rol"
                             name="Rol"
                             className="w-full border rounded px-4 py-2 text-lg"
-                            {...register('Rol', { required: true })}>
-                            <option value="" disabled>All</option>
+                            {...register('rol', { required: true })}>
+                                
+                            <option value="" disabled>Selecciona</option>
                             {roles.map(rol => (
 
-                                <option value={rol.id_rol}>{rol.nombre_rol} </option>
+                                <option key={rol.id_rol} value={rol.id_rol}>{rol.nombre_rol} </option>
                             ))
 
                             }
@@ -100,6 +109,10 @@ const RegistrarUsuarios = () => {
                     <button type="submit" className="bg-green-500 text-white font-bold py-3 px-3 rounded-lg text-lg">
                         Registrar
                     </button>
+
+                    <Link to={'/gestion-admin'} type="submit" className="bg-green-400 text-white font-bold py-3 px-3 rounded-lg text-lg mt-5 text-center">
+                        Volver
+                    </Link>
                 </form>
                 <div className="hidden xl:flex justify-center items-center">
                     <h1 className='text-4xl'> GESTION <span className="text-green-500">TECH</span></h1>

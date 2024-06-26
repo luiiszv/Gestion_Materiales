@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { TOKENSECRET } from "../config.js";
 
 
-const validarToken = (req, res, next) => {
+export const validarToken = (req, res, next) => {
 
     const { token } = req.cookies;
 
