@@ -4,13 +4,13 @@ import { useAuth } from "../context/AuthContext";
 import Header from '../components/Header';
 
 export const UserLayout = () => {
-    const { user, auth, isAuthenticated } = useAuth();
+    const { user, loading, isAuthenticated } = useAuth();
 
-    if (!auth && !isAuthenticated) return <h1>Loading...</h1>;
+    if (loading) return <h1>Loading...</h1>;
 
-    if (!isAuthenticated) return <Navigate to='/login' replace />;
+    if (!loading && !isAuthenticated) return <Navigate to='/login' replace />;
 
-  
+
 
     return (
         <div>

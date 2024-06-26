@@ -17,12 +17,12 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
     const [roles, setRoles] = useState([]);
     const [user, setUser] = useState(null);
-    const [auth, setAuth] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const logout = async () => {
         Cookies.remove("token");
-        setAuth(false);
+        setLoading(false);
         setUser(null);
         setIsAuthenticated(false);
     };
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const response = await login(data);
             if (response.data) {
-                setAuth(true);
+                setLoading(false);
                 setUser(response.data);
                 setIsAuthenticated(true);
                 return response;
@@ -42,34 +42,43 @@ export const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        const verificarFrontToken = async () => {
-            const res = await verify();
+        async function verificarFrontToken() {
+            
+            
+           
             const cookies = Cookies.get();
-            console.log(cookies.token, res);
-
             if (!cookies.token) {
-                setUser(null);
-                setAuth(false);
                 setIsAuthenticated(false);
-                return;
+                setLoading(false);
+                setUser(null);
+                return setUser(null);
             }
+
+            const res = await verify();
+
+           
 
             try {
-                if (res.data) {
-                    setUser(res.data);
-                    setAuth(true);
-                    setIsAuthenticated(true);
-                } else {
-                    setUser(null);
-                    setAuth(false);
+                if (!res.data) {
+                    
+                    setLoading(false);
+
                     setIsAuthenticated(false);
                 }
+                setUser(null);
+
+
+                setIsAuthenticated(true);
+                setUser(res.data)
+                setLoading(false)
+
             } catch (error) {
                 console.log(error);
-                setUser(null);
-                setAuth(false);
                 setIsAuthenticated(false);
-            }
+                setUser(null)
+                setLoading(false)
+
+            } 
         };
 
         verificarFrontToken();
@@ -98,7 +107,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ loginAuth, getUsuarios, user, auth, logout, isAuthenticated, roles }}>
+        <AuthContext.Provider value={{ loginAuth, getUsuarios, user, loading, logout, isAuthenticated, roles }}>
             {children}
         </AuthContext.Provider>
     );

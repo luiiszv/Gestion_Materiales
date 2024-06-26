@@ -67,7 +67,7 @@ export const login = async (req, res) => {
       res.status(404).json({ message: "Credenciales  inválidas" });
     }
   } catch (error) {
-    res.status(400).json(error);
+    res.status(404).json(error);
   }
 };
 
@@ -80,7 +80,7 @@ export const consultaToken = async (req, res) => {
   try {
 
     if(!token){
-      return res.status(401).json({message: 'No Autorizado'});
+      return res.status(404).json({message: 'No Autorizado'});
 
     }
 
@@ -103,7 +103,7 @@ export const consultaToken = async (req, res) => {
 
 
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).json({message: 'Error No Autorizado'});
 
   }
 
