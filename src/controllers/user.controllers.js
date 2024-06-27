@@ -38,7 +38,7 @@ export const getUsers = async (req, res) => {
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password)
+  console.log(email, password);
 
   try {
     const [rows] = await pool.query(
@@ -57,12 +57,11 @@ export const login = async (req, res) => {
     if (match) {
       const token = await crearToken({
         id: usuario.id_usuario,
-        rol: usuario.roles_id_rol
+        rol: usuario.roles_id_rol,
       });
       res.cookie("token", token);
 
       res.status(200).json({ message: "Inicio de sesión exitoso", usuario });
-
     } else {
       res.status(404).json({ message: "Credenciales  inválidas" });
     }
@@ -71,100 +70,69 @@ export const login = async (req, res) => {
   }
 };
 
-
 export const consultaToken = async (req, res) => {
-
   const { token } = req.cookies;
 
-
   try {
-
     if (!token) {
-      return res.status(404).json({ message: 'No Autorizado' });
-
+      return res.status(404).json({ message: "No Autorizado" });
     }
 
     jwt.verify(token, TOKENSECRET, async (err, user) => {
       if (err) {
-        return res.status(401).json({ message: 'Token Invalido' });
+        return res.status(401).json({ message: "Token Invalido" });
       }
 
-      const [rows] = await pool.query('SELECT * FROM usuarios WHERE id_usuario= ?', [user.id]);
-
-
+      const [rows] = await pool.query(
+        "SELECT * FROM usuarios WHERE id_usuario= ?",
+        [user.id]
+      );
 
       return res.status(200).json(rows[0]);
-
-
-    })
-
-
-
+    });
   } catch (error) {
-    res.status(400).json({ message: 'Error No Autorizado' });
-
+    res.status(400).json({ message: "Error No Autorizado" });
   }
-
-}
-
-
+};
 
 export const getAllEstudiantes = async (req, res) => {
-
-
   try {
-    const [rows] = await pool.query('SELECT * FROM usuarios WHERE roles_id_rol= ?', [3]);
-
+    const [rows] = await pool.query(
+      "SELECT * FROM usuarios WHERE roles_id_rol= ?",
+      [3]
+    );
 
     return res.status(200).json(rows);
-
   } catch (error) {
-    res.status(400).json({ message: 'Error No Autorizado', error });
-
-
+    res.status(400).json({ message: "Error No Autorizado", error });
   }
-
-}
+};
 
 export const getOneUser = async (req, res) => {
-
-
   try {
-
-    const [rows] = await pool.query('SELECT * FROM usuarios WHERE id_usuario=?', [req.params.id]);
+    const [rows] = await pool.query(
+      "SELECT * FROM usuarios WHERE id_usuario=?",
+      [req.params.id]
+    );
 
     res.status(200).json(rows[0]);
-
   } catch (error) {
-
-    res.status(400).json({ message: 'Error No Autorizado', error });
-
-
+    res.status(400).json({ message: "Error No Autorizado", error });
   }
-
-}
+};
 
 export const editUsuario = async (req, res) => {
-
-  const { nombres_usuario, apellidos_usuario, email_usuario } = req.body;
+  const { nombres, apellidos, email } = req.body;
   try {
-
-
-    const [rows] = await pool.query('UPDATE usuarios SET  nombres_usuario=?, apellidos_usuario= ?, email_usuario=?  WHERE id_usuario=?',
-      [nombres_usuario, apellidos_usuario, email_usuario, req.params.id]
-    )
+    const [rows] = await pool.query(
+      "UPDATE usuarios SET  nombres_usuario=?, apellidos_usuario= ?, email_usuario=?  WHERE id_usuario=?",
+      [nombres, apellidos, email, req.params.id]
+    );
 
     if (rows.affectedRows > 0) {
-      res.status(200).json({ message: 'Usuario Actaualizado' })
+      res.status(200).json({ message: "Usuario Actaualizado" });
     }
-
-
   } catch (error) {
-    res.status(400).json({ message: 'Error No Autorizado', error });
-
-
+    res.status(400).json({ message: "Error No Autorizado", error });
   }
-
-}
-
-
+};

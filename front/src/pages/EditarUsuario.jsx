@@ -1,18 +1,47 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Link } from 'react-router-dom';
+
 
 const EditarUsuario = () => {
 
-    const { roles, registrarUsuarios } = useAuth()
+    const { id } = useParams();
 
-    const { register, handleSubmit } = useForm();
+    const { roles, editarUsuario, obtenerOneUsuario } = useAuth()
 
-    const navigate= useNavigate();
+    const { register, handleSubmit, setValue } = useForm();
+
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+
+
+        const obtUser = async () => {
+
+            const res = await obtenerOneUsuario(id)
+
+            const { data } = res;
+
+
+
+            if (res.status == 200) {
+                setValue('nombres', data.nombres_usuario)
+                setValue('apellidos', data.apellidos_usuario)
+                setValue('rol', data.roles_id_rol)
+                setValue('email', data.email_usuario)
+
+            }
+
+
+        }
+
+        obtUser();
+
+    }, [])
 
 
 
@@ -20,12 +49,13 @@ const EditarUsuario = () => {
     const onSubmit = handleSubmit(async (values) => {
 
 
-        const res= await registrarUsuarios(values);
 
-         
+        const res= await editarUsuario(id, values)
+
+
         if (res.status == 200) {
-            alert('Usuario Registrado');
-        
+            alert('Usuario Editado');
+
 
             setTimeout(() => {
                 navigate('/gestion-admin');
@@ -78,7 +108,7 @@ const EditarUsuario = () => {
                             name="Rol"
                             className="w-full border rounded px-4 py-2 text-lg"
                             {...register('rol', { required: true })}>
-                                
+
                             <option value="" disabled>Selecciona</option>
                             {roles.map(rol => (
 

@@ -10,12 +10,12 @@ export const UserLayout = () => {
 
     if (!loading && !isAuthenticated) return <Navigate to='/login' replace />;
 
-
-
     return (
         <div>
             <Header />
-            <Outlet />
+            <div className="mt-24"> {/* Ajusta este valor según la altura del header */}
+                <Outlet />
+            </div>
         </div>
     );
 };

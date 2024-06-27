@@ -11,9 +11,8 @@ const Header = () => {
     if (roles_id_rol === 2) {
         gestionLink = (
             <>
-                
                 <Link to="/" className="text-black font-semibold hover:text-white">
-                    Home 
+                    Home
                 </Link>
                 <Link to="/asignar-materiales" className="text-black font-semibold hover:text-white">
                     Gestión Materiales
@@ -26,7 +25,6 @@ const Header = () => {
                 <Link to="/" className="text-black font-semibold hover:text-white">
                     Home
                 </Link>
-                
                 <Link to="/gestion-admin" className="text-black font-semibold hover:text-white">
                     Gestión Admin
                 </Link>
@@ -41,7 +39,7 @@ const Header = () => {
     }
 
     return (
-        <header className="bg-gray-400 px-4 py-6 flex justify-between items-center rounded-lg">
+        <header className="bg-gray-400 px-4 py-6 flex justify-between items-center fixed w-full top-0 z-10 shadow-md">
             <div className="flex items-center">
                 <Link className="text-xl font-bold text-gray-800" to="/">
                     GESTION <span className="text-green-500">TECH</span>

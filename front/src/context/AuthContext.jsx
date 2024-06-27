@@ -1,12 +1,13 @@
 import React, { useContext, useState, createContext, useEffect } from 'react';
 import Cookies from "js-cookie";
-import { login, verify, getUsers, registerUsers, getEstudiantes } from "../Api/userApi.js";
+import { login, verify, getUsers, registerUsers, getEstudiantes, getOneUser, editUser } from "../Api/userApi.js";
 import { getRoles } from "../Api/rolesApi.js";
 
 import { getAllAsign, asignarMateriales } from "../Api/asignacionesApi.js";
 import { useLocation } from "react-router-dom";
 
-import { getMateriales, registerMateriales, getMisMateriales } from "../Api/materialesApi.js";
+import { getMateriales, registerMateriales, getMisMateriales, getMaterial, updateMaterial } from "../Api/materialesApi.js";
+
 
 
 const AuthContext = createContext();
@@ -21,7 +22,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
 
-    
+
     let location = useLocation()
     const [roles, setRoles] = useState([]);
     const [materiales, setMateriales] = useState([]);
@@ -154,7 +155,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         todasAsignaciones();
-       
+
 
 
         getAllRoles();
@@ -207,8 +208,67 @@ export const AuthProvider = ({ children }) => {
 
     }
 
+
+    const obtenerOneMaterial = async (id_material) => {
+
+        try {
+
+            const res = await getMaterial(id_material)
+            return res;
+
+        } catch (error) {
+            console.log(error)
+
+        }
+
+    }
+
+
+    const actualizarMaterial = async (id_material, data) => {
+        try {
+
+            const res = await updateMaterial(id_material, data);
+            console.log(res)
+            return res;
+
+        } catch (error) {
+            console.log(error)
+
+        }
+
+    }
+
+
+    const obtenerOneUsuario = async (id_cleinte) => {
+
+        try {
+            const res = await getOneUser(id_cleinte)
+
+            return res;
+
+        } catch (error) {
+
+            console.log(error)
+
+        }
+
+    }
+
+    const editarUsuario = async (id_usuario, data) => {
+        try {
+
+            const res = await editUser(id_usuario, data);
+            return res;
+
+        } catch (error) {
+            console.log(error)
+
+        }
+
+    }
+
     return (
-        <AuthContext.Provider value={{ getAllEstiduantes, asignarMaterial, obtenerMisMateriales, asignaciones, loginAuth, getUsuarios, user, loading, logout, isAuthenticated, roles, registrarUsuarios, materiales, registrarMaterialesUsuarios }}>
+        <AuthContext.Provider value={{ actualizarMaterial, obtenerOneMaterial, obtenerOneUsuario, editarUsuario, getAllEstiduantes, asignarMaterial, obtenerMisMateriales, asignaciones, loginAuth, getUsuarios, user, loading, logout, isAuthenticated, roles, registrarUsuarios, materiales, registrarMaterialesUsuarios }}>
             {children}
         </AuthContext.Provider>
     );

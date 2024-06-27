@@ -29,9 +29,9 @@ const GestionUsuarios = () => {
 
 
   return (
-    <div className="mb-5">
+    <div className="m-10">
 
-      <div className="w-full border-s-orange-50 m-5">
+      <div className="w-auto border-s-orange-50 m-5">
         <Link to={'/registrar-usuarios'} className='bg-blue-200 p-2 m-2 rounded-xl hover:bg-green-400'>Registrar Usuarios</Link>
         <Link to={'/registrar-materiales'} className='bg-blue-200 p-2 m-2 rounded-xl hover:bg-green-400'>Registrar Materiales</Link>
 
@@ -135,6 +135,7 @@ const GestionUsuarios = () => {
                   <td className='p-2 border   text-center'>{
 
                     <Link
+                    to={`/gestion-admin/editar/material/${mat.id_material}`}
                    
                     className='bg-blue-400 hover:bg-blue-600 px-1 text-white rounded-lg '>Editar</Link>
 
