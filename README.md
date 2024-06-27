@@ -1,4 +1,4 @@
-Script de la Bade de datos en archibo db
+Script de la Bade de datos en archivo db
 
 
 Este repositorio incluye un script SQL en /db
